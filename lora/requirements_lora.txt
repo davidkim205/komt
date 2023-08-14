@@ -1,0 +1,3 @@
+bitsandbytes>=0.39.0
+peft
+scipy
