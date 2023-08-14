@@ -4,9 +4,9 @@ However, when it comes to Korean language performance, it has been observed that
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
 
 ## Released Model Checkpoints
-- komt-Llama-2-7b-chat-hf : https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf
-- komt-Llama-2-7b-chat-hf-lora : https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora
-- komt-Llama-2-13b-chat-hf : The model is currently being trained.
+- komt-Llama-2-7b-chat-hf : [davidkim205/komt-Llama-2-7b-chat-hf](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf)
+- komt-Llama-2-7b-chat-hf-lora : [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
+- komt-Llama-2-13b-chat-hf : [davidkim205/komt-Llama-2-13b-hf](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf)
 - komt-Llama-2-13b-chat-hf-lora : The model is currently being trained.
 ## Hardware and Software
 - nvidia driver : 535.54.03
