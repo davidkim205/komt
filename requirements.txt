@@ -1,0 +1,5 @@
+numpy
+sentencepiece
+accelerate
+git+https://github.com/huggingface/transformers.git@v4.28.0
+torch
