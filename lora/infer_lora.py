@@ -66,7 +66,7 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.bfloat16
 )
 model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config,
-                                             device_map="auto")
+                                             device_map="auto",  low_cpu_mem_usage=True)
 model = PeftModel.from_pretrained(model, peft_model_name)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 stopping_criteria = StoppingCriteriaList([LocalStoppingCriteria(tokenizer=tokenizer, stop_words=stop_words)])

@@ -8,12 +8,16 @@ This study addresses these challenges by introducing a multi-task instruction te
 - komt-Llama-2-7b-chat-hf-lora : [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
 - komt-Llama-2-13b-chat-hf : [davidkim205/komt-Llama-2-13b-hf](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf)
 - komt-Llama-2-13b-chat-hf-lora : The model is currently being trained.
+- komt-polyglot-ko-12.8b : The model is currently being trained.
+- komt-polyglot-ko-12.8b-lora : The model is currently being trained.
+- komt-polyglot-ko-5.8b : The model is currently being trained.
+
 ## Hardware and Software
 - nvidia driver : 535.54.03
 - CUDA Version: 12.2
 
 ## Setup
-working!!!
+
 ```
 git clone git@github.com:davidkim205/komt.git
 cd komt
@@ -24,20 +28,38 @@ conda activate komt
 pip install -r requirements.txt
 
 ```
+### for lora
+After completing the basic installation, you need to install the 'requirements_lora.txt' located in the 'lora' directory.
+``` 
+pip install -r lora/requirements_lora.txt
+```
 
 ## Inference
-working!!!
+``` 
+python infer.py davidkim205/komt-Llama-2-7b-chat-hf
+```
+### LoRA Inference
+``` 
+python lora/infer_loray.py davidkim205/komt-Llama-2-7b-chat-hf
+```
 
-
-
-### Fine-tuning
+## evaluate
+``` 
+python eval.py davidkim205/komt-Llama-2-7b-chat-hf-lora
+```
+### LoRA Inference
+``` 
+python lora/eval.py davidkim205/komt-Llama-2-7b-chat-hf-lora
+```
+## Fine-tuning
 working!!!
 
 
 ## dataset
 we collected various datasets based on the Korean language. A total of 1,642,421 datasets were created. These datasets include AI Hub, 모두의 말뭉치 (Korean language corpus), KISTI AI, and ShareGPT.
 
-working!!!
+## Multi-Task Instruction
+
 
 ## Model Benchmark
 - Used EleutherAI's lm-evaluation-harness https://github.com/EleutherAI/lm-evaluation-harness/tree/polyglot
@@ -49,6 +71,14 @@ working!!!
 | beomi/llama-2-ko-7b           |       0 | acc    |     0.5029 | ±    | 0.0220 |
 | kfkas/Llama-2-ko-7b-Chat      |       0 | acc    |     0.5318 | ±    | 0.0219 |
 | **komt-llama-2-7b (ours)**    |       0 | acc    | **0.5530** | ±    | 0.0218 |
+
+# Memory Usage
+- komt-Llama-2-7b-chat-hf : 23611MiB / 24576MiB 
+- komt-Llama-2-7b-chat-hf-lora : 23611MiB / 24576MiB 
+- komt-Llama-2-13b-hf : working!!!
+- komt-polyglot-ko-12.8b : working!!!
+- komt-polyglot-ko-12.8b-lora : working!!!
+- komt-polyglot-ko-5.8b : working!!!
 
 ### Examples
 | 영화 해리포터 시리즈 배급사가 어디야                         |
@@ -67,11 +97,12 @@ working!!!
 | 워너 브라더스\n또한, 영화 해리포터와 해리포터 시리즈에서 빗자루를 타고 등장하는 스네이프 대신 이번 작품에서는 볼드모트가 빗자루를 타고 등장한다. 영화 해리포터와 해리포터 시리즈의 등장인물 목록 참고. 《해리포터와 죽음의 성물 1부》(Harry Potter and the Deathly Hallows – Part 1)는 2010년에 개봉한 영화로서 J. K. 롤링의 동명 소설(해리포터와 죽음의 성물)을 원작으로 하여 만든, 영국과 미국 합작, 판타지 스릴러 영화다. 소설 7부작 중 마지막 일곱 번째에 해당하는 작품이며, 영화 해리포터와 죽음의 성물 시리즈(해리포터 (영화 시리즈))의 첫 번째 작품이다. 영화 해리포터 시리즈(해리포터 (영화 시리즈))의 최종편으로, 영화 해리포터와 죽음의 성물 2부에서 데스 이터가 된 볼드모트가 등장하여 결전을 벌인다. 《해리포터와 죽음의 성물 1부》(Harry Potter and the Deathly Hallows – Part 1)는 2010년에 개봉한 영화로서 J. K. 롤링의 동명 소설(해리포터와 죽음의 성물)을 원작으로 하여 만든, 영국과 미국 합작, 판타지 스릴러 영화다. 소설 7부작 중 마지막 일곱 번째에 해당하는 작품이며, 영화 해리포터와 죽음의 성물 시리즈(해리포터 (영화 시리즈))의 첫 번째 작품이다 |
 
 ## References
--  [Llama 2](https://github.com/facebookresearch/llama)
+- https://github.com/facebookresearch/llama)
+- https://huggingface.co/EleutherAI/polyglot-ko-12.8b
 
 -----------------
 ## Original LLaMA
 ### Llama 2
 https://github.com/facebookresearch/llama
 ### Llama 1
-[`llama_v1`](https://github.com/facebookresearch/llama/tree/llama_v1)
+https://github.com/facebookresearch/llama/tree/llama_v1
