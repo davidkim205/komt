@@ -74,11 +74,11 @@ we collected various datasets based on the Korean language. A total of 1,642,421
 
 # Memory Usage
 - komt-Llama-2-7b-chat-hf : 23611MiB / 24576MiB 
-- komt-Llama-2-7b-chat-hf-lora : 23611MiB / 24576MiB 
-- komt-Llama-2-13b-hf : working!!!
-- komt-polyglot-ko-12.8b : working!!!
+- komt-Llama-2-7b-chat-hf-lora : 4665MiB / 24576MiB
+- komt-Llama-2-13b-hf : 50658MiB / 81920MiB 
+- komt-polyglot-ko-12.8b : 50188MiB / 81920MiB 
 - komt-polyglot-ko-12.8b-lora : working!!!
-- komt-polyglot-ko-5.8b : working!!!
+- komt-polyglot-ko-5.8b : 23414MiB / 81920MiB 
 
 ### Examples
 | 영화 해리포터 시리즈 배급사가 어디야                         |
