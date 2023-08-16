@@ -2,12 +2,18 @@
 Recently, due to the success of ChatGPT, numerous large language models have emerged in an attempt to catch up with ChatGPT's capabilities. 
 However, when it comes to Korean language performance, it has been observed that many models still struggle to provide accurate answers or generate Korean text effectively. 
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
+## News or Update
+### 2023.08.16 
+- We are releasing the [davidkim205/komt-Llama-2-7b-chat-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-ggml) model
+
 
 ## Released Model Checkpoints
 - komt-Llama-2-7b-chat-hf : [davidkim205/komt-Llama-2-7b-chat-hf](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf)
 - komt-Llama-2-7b-chat-hf-lora : [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
+- komt-Llama-2-7b-chat-hf-ggml : [davidkim205/komt-Llama-2-7b-chat-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-ggml)
 - komt-Llama-2-13b-chat-hf : [davidkim205/komt-Llama-2-13b-hf](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf)
 - komt-Llama-2-13b-chat-hf-lora : The model is currently being trained.
+- komt-Llama-2-13b-chat-hf-ggml : The model is currently being trained. 
 - komt-polyglot-ko-12.8b : The model is currently being trained.
 - komt-polyglot-ko-12.8b-lora : The model is currently being trained.
 - komt-polyglot-ko-5.8b : The model is currently being trained.
@@ -33,7 +39,12 @@ After completing the basic installation, you need to install the 'requirements_l
 ``` 
 pip install -r lora/requirements_lora.txt
 ```
+### for GGML
+If you choose to download it directly, please refer to the instructions provided at [llama.cpp](https://github.com/ggerganov/llama.cpp#usage).
 
+``` 
+pip install -r llama.cpp/requirements.txt
+```
 ## Inference
 ``` 
 python infer.py davidkim205/komt-Llama-2-7b-chat-hf
@@ -42,6 +53,17 @@ python infer.py davidkim205/komt-Llama-2-7b-chat-hf
 ``` 
 python lora/infer_loray.py davidkim205/komt-Llama-2-7b-chat-hf
 ```
+
+### GGML Inference
+```
+cd llama.cpp 
+make -j && ./main -m ./models/komt-Llama-2-7b-chat-hf-ggml/ggml-model-q4_0.bin -p "자동차 종합(정기)검사 의무기간은 얼 마인가요?"
+```
+When using the original [llama.cpp](https://github.com/ggerganov/llama.cpp) 
+``` 
+make -j && ./main -m ./models/komt-Llama-2-7b-chat-hf-ggml/ggml-model-q4_0.bin -p "### instruction: 누전차단기가 내려가는 이유는 무엇입 니까?\n\n### Response:"
+```
+
 
 ## evaluate
 ``` 
@@ -76,6 +98,7 @@ we collected various datasets based on the Korean language. A total of 1,642,421
 - komt-Llama-2-7b-chat-hf : 23611MiB / 24576MiB 
 - komt-Llama-2-7b-chat-hf-lora : 4665MiB / 24576MiB
 - komt-Llama-2-13b-hf : 50658MiB / 81920MiB 
+- komt-Llama-2-13b-hf-lora : 9101MiB / 24564MiB 
 - komt-polyglot-ko-12.8b : 50188MiB / 81920MiB 
 - komt-polyglot-ko-12.8b-lora : working!!!
 - komt-polyglot-ko-5.8b : 23414MiB / 81920MiB 
@@ -106,3 +129,6 @@ we collected various datasets based on the Korean language. A total of 1,642,421
 https://github.com/facebookresearch/llama
 ### Llama 1
 https://github.com/facebookresearch/llama/tree/llama_v1
+
+### llama.cpp
+https://github.com/ggerganov/llama.cpp
