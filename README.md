@@ -5,15 +5,16 @@ This study addresses these challenges by introducing a multi-task instruction te
 ## News or Update
 ### 2023.08.16 
 - We are releasing the [davidkim205/komt-Llama-2-7b-chat-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-ggml) model
-
+### 2023.08.17
+- We are releasing the [davidkim205/komt-Llama-2-13b-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-lora) and [davidkim205/komt-Llama-2-13b-hf-ggml]https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-ggml) models
 
 ## Released Model Checkpoints
 - komt-Llama-2-7b-chat-hf : [davidkim205/komt-Llama-2-7b-chat-hf](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf)
 - komt-Llama-2-7b-chat-hf-lora : [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
 - komt-Llama-2-7b-chat-hf-ggml : [davidkim205/komt-Llama-2-7b-chat-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-ggml)
 - komt-Llama-2-13b-chat-hf : [davidkim205/komt-Llama-2-13b-hf](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf)
-- komt-Llama-2-13b-chat-hf-lora : The model is currently being trained.
-- komt-Llama-2-13b-chat-hf-ggml : The model is currently being trained. 
+- komt-Llama-2-13b-chat-hf-lora : [davidkim205/komt-Llama-2-13b-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-lora)
+- komt-Llama-2-13b-chat-hf-ggml : [davidkim205/komt-Llama-2-13b-hf-ggml]https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-ggml)
 - komt-polyglot-ko-12.8b : The model is currently being trained.
 - komt-polyglot-ko-12.8b-lora : The model is currently being trained.
 - komt-polyglot-ko-5.8b : The model is currently being trained.
@@ -75,7 +76,10 @@ python lora/eval.py davidkim205/komt-Llama-2-7b-chat-hf-lora
 ```
 ## Fine-tuning
 working!!!
-
+### Fine-tuning using FSDP
+working!!!
+### Fine-tuning using LoRA
+working!!!
 
 ## dataset
 we collected various datasets based on the Korean language. A total of 1,642,421 datasets were created. These datasets include AI Hub, 모두의 말뭉치 (Korean language corpus), KISTI AI, and ShareGPT.
@@ -122,7 +126,6 @@ we collected various datasets based on the Korean language. A total of 1,642,421
 ## References
 - https://github.com/facebookresearch/llama)
 - https://huggingface.co/EleutherAI/polyglot-ko-12.8b
-- https://github.com/ggerganov/llama.cpp
 
 -----------------
 ## Original LLaMA
@@ -131,3 +134,5 @@ https://github.com/facebookresearch/llama
 ### Llama 1
 https://github.com/facebookresearch/llama/tree/llama_v1
 
+### llama.cpp
+https://github.com/ggerganov/llama.cpp
