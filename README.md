@@ -122,6 +122,7 @@ we collected various datasets based on the Korean language. A total of 1,642,421
 ## References
 - https://github.com/facebookresearch/llama)
 - https://huggingface.co/EleutherAI/polyglot-ko-12.8b
+- https://github.com/ggerganov/llama.cpp
 
 -----------------
 ## Original LLaMA
@@ -130,5 +131,3 @@ https://github.com/facebookresearch/llama
 ### Llama 1
 https://github.com/facebookresearch/llama/tree/llama_v1
 
-### llama.cpp
-https://github.com/ggerganov/llama.cpp
