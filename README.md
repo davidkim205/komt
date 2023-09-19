@@ -95,13 +95,19 @@ python app.py --backend_type transformers --model_path ./komt-llama2-7b-v1/
 ### llama.cpp 
 ![llama.cpp-example.gif](images%2Fllama.cpp-example.gif)
 ```
+git clone https://github.com/ggerganov/llama.cpp.git
 cd llama.cpp
+pip install -r requirements.txt
 
 pip install huggingface-hub
 python -c "from huggingface_hub import hf_hub_download;print(hf_hub_download(repo_id='davidkim205/komt-llama2-7b-v1-ggml', filename='ggml-model-q4_0.gguf', local_dir='./models/'))"
 
-make -j && ./main -m ./models/komt-llama2-7b-v1-ggml/ggml-model-q4_0.gguf -p "인삼은 어떤 효과가 있는가요? ##output:"
+make -j && ./main -m ./models/ggml-model-q4_0.gguf -p "인삼은 어떤 효과가 있는가요? ##output:"
 ```
+### llama.cpp with google colab
+google colab에서 llama.cpp를 사용하여 komt를 사용하는 방법 
+https://colab.research.google.com/drive/1uLHXv-6NT7yj4FHECrZezfo5pVL-ht63?usp=sharing
+
 
 ### usage_komt_with_lora
 python과 jupyter를 이용한 예제입니다.
