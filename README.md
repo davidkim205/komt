@@ -1,23 +1,35 @@
 # komt
+![multi task instruction tuning.jpg](images%2Fmulti%20task%20instruction%20tuning.jpg)
+
 Recently, due to the success of ChatGPT, numerous large language models have emerged in an attempt to catch up with ChatGPT's capabilities. 
 However, when it comes to Korean language performance, it has been observed that many models still struggle to provide accurate answers or generate Korean text effectively. 
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
+
 ## News or Update
+### 2023.09.19
+- komt-llama2 모델을 쉽게 사용할수 있도록 예제와 학습 방법, 데이터셋을 추가합니다.
+### 2023.09.17 
+- 개선된 multi-task dataset으로 학습한 komt-llama2-7b-v1 모델을 배포합니다.(가끔씩 end token 적용이 안되는 문제, 답변을 너무 길게 하는 문제등 수정) 
+- [davidkim205/komt-llama2-7b-v1](https://huggingface.co/davidkim205/komt-llama2-7b-v1)
+- [davidkim205/komt-llama2-7b-v1-lora](https://huggingface.co/davidkim205/komt-llama2-7b-v1-lora)
+- [davidkim205/komt-llama2-7b-v1-ggml](https://huggingface.co/davidkim205/komt-llama2-7b-v1-ggml) 
 ### 2023.08.16 
 - We are releasing the [davidkim205/komt-Llama-2-7b-chat-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-ggml) model
 ### 2023.08.17
 - We are releasing the [davidkim205/komt-Llama-2-13b-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-lora) and [davidkim205/komt-Llama-2-13b-hf-ggml]https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-ggml) models
 
 ## Released Model Checkpoints
+- [davidkim205/komt-llama2-7b-v1](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf)
+- [davidkim205/komt-llama2-7b-v1-lora](https://huggingface.co/davidkim205/komt-llama2-7b-v1-lora)
+- [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
+-  
+### old version
 - komt-Llama-2-7b-chat-hf : [davidkim205/komt-Llama-2-7b-chat-hf](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf)
 - komt-Llama-2-7b-chat-hf-lora : [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
 - komt-Llama-2-7b-chat-hf-ggml : [davidkim205/komt-Llama-2-7b-chat-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-ggml)
 - komt-Llama-2-13b-chat-hf : [davidkim205/komt-Llama-2-13b-hf](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf)
 - komt-Llama-2-13b-chat-hf-lora : [davidkim205/komt-Llama-2-13b-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-lora)
 - komt-Llama-2-13b-chat-hf-ggml : [davidkim205/komt-Llama-2-13b-hf-ggml]https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-ggml)
-- komt-polyglot-ko-12.8b : The model is currently being trained.
-- komt-polyglot-ko-12.8b-lora : The model is currently being trained.
-- komt-polyglot-ko-5.8b : The model is currently being trained.
 
 ## Hardware and Software
 - nvidia driver : 535.54.03
@@ -26,7 +38,7 @@ This study addresses these challenges by introducing a multi-task instruction te
 ## Setup
 
 ```
-git clone git@github.com:davidkim205/komt.git
+git clone https://github.com/davidkim205/komt.git
 cd komt
 
 conda create -n komt python=3.10
@@ -35,100 +47,173 @@ conda activate komt
 pip install -r requirements.txt
 
 ```
-### for lora
-After completing the basic installation, you need to install the 'requirements_lora.txt' located in the 'lora' directory.
-``` 
-pip install -r lora/requirements_lora.txt
-```
-### for GGML
-If you choose to download it directly, please refer to the instructions provided at [llama.cpp](https://github.com/ggerganov/llama.cpp#usage).
+## Usage
+우리는 komt-llama2 모델을 사용할수 있는 다양한 방법을 제공합니다.
+
+### text-generation-webui
+![text-generation-webui.gif](images%2Ftext-generation-webui.gif)
 
 ``` 
-pip install -r llama.cpp/requirements.txt
-```
-## Inference
-``` 
-python infer.py davidkim205/komt-Llama-2-7b-chat-hf
-```
-### LoRA Inference
-``` 
-python lora/infer_loray.py davidkim205/komt-Llama-2-7b-chat-hf
-```
+# text-generation-webui 코드 받기
+git clone https://github.com/oobabooga/text-generation-webui
+cd text-generation-webui/
 
-### GGML Inference
-```
-cd llama.cpp 
-make -j && ./main -m ./models/komt-Llama-2-7b-chat-hf-ggml/ggml-model-q4_0.bin -p "자동차 종합(정기)검사 의무기간은 얼 마인가요?"
-```
-When using the original [llama.cpp](https://github.com/ggerganov/llama.cpp) 
-``` 
-make -j && ./main -m ./models/komt-Llama-2-7b-chat-hf-ggml/ggml-model-q4_0.bin -p "### instruction: 누전차단기가 내려가는 이유는 무엇입 니까?\n\n### Response:"
-```
+# conda 환경생성 
+conda create -n text-generation-webui python=3.10
+conda activate text-generation-webui
 
+# pip install
+pip install -r requirements.txt
 
-## evaluate
-``` 
-python eval.py davidkim205/komt-Llama-2-7b-chat-hf-lora
-```
-### LoRA Inference
-``` 
-python lora/eval.py davidkim205/komt-Llama-2-7b-chat-hf-lora
-```
-## Fine-tuning
-working!!!
-### Fine-tuning using FSDP
-working!!!
-### Fine-tuning using LoRA
-working!!!
-
-## dataset
-we collected various datasets based on the Korean language. A total of 1,642,421 datasets were created. These datasets include AI Hub, 모두의 말뭉치 (Korean language corpus), KISTI AI, and ShareGPT.
-
-## Multi-Task Instruction
-
-
-## Model Benchmark
-- Used EleutherAI's lm-evaluation-harness https://github.com/EleutherAI/lm-evaluation-harness/tree/polyglot
+# model download
+pip install huggingface-hub
+python -c "from huggingface_hub import hf_hub_download;print(hf_hub_download(repo_id='davidkim205/komt-llama2-7b-v1-ggml', filename='ggml-model-q4_0.gguf', local_dir='./models/'))"
  
-### Korean Semantic Textual Similarity
-| model name                    | Version | Metric |      Value |      | Stderr |
-|-------------------------------| ------: | ------ |-----------:| ---- | -----: |
-| meta-llama/Llama-2-7b-chat-hf |       0 | acc    |     0.4817 | ±    | 0.0220 |
-| beomi/llama-2-ko-7b           |       0 | acc    |     0.5029 | ±    | 0.0220 |
-| kfkas/Llama-2-ko-7b-Chat      |       0 | acc    |     0.5318 | ±    | 0.0219 |
-| **komt-llama-2-7b (ours)**    |       0 | acc    | **0.5530** | ±    | 0.0218 |
+# server 실행
+python server.py
+```
+### llama2-webui
+![llama2-webui.gif](images%2Fllama2-webui.gif)
 
-# Memory Usage
-- komt-Llama-2-7b-chat-hf : 23611MiB / 24576MiB 
-- komt-Llama-2-7b-chat-hf-lora : 4665MiB / 24576MiB
-- komt-Llama-2-13b-hf : 50658MiB / 81920MiB 
-- komt-Llama-2-13b-hf-lora : 9101MiB / 24564MiB 
-- komt-polyglot-ko-12.8b : 50188MiB / 81920MiB 
-- komt-polyglot-ko-12.8b-lora : working!!!
-- komt-polyglot-ko-5.8b : 23414MiB / 81920MiB 
+https://github.com/liltom-eth/llama2-webui
 
-### Examples
-| 영화 해리포터 시리즈 배급사가 어디야                         |
-| ------------------------------------------------------------ |
-| **meta-llama/Llama-2-7b-chat-hf**                            |
-| Warner Bros.                                                 |
-| **kfkas/Llama-2-ko-7b-Chat**                                 |
-| 해리포터 시리즈 배급사는 워너 브라더스(WB)입니다. 해리포터 시리즈는 2001년 영화로 처음 개봉되었습니다. 시리즈는 2018년 마지막 편인 해리포터와 마법사의 돌까지 총 8부작으로 제작되었습니다. |
-| **beomi/llama-2-ko-7b**                                      |
-| 1. Universal Pictures. Universal Pictures는 Universal Pictures가 영화 배급사로서 배급하고 있는 영화가 무엇인지 알려주는 웹사이트이다. Universal Pictures의 홈페이지에는 영화와 관련된 다양한 자료가 담겨 있다. 이 웹사이트는 크게 4개의 섹션으로 구성되어 있다. 그 중 첫 번째 섹션인 ‘Movies’에는 Universal Pictures가 배급하고 있는 영화가 소개되어 있다. Universal Pictures가 배급하고 있는 영화의 리스트를 보고 싶은 사용자는 화면 왼쪽에 있는 ‘Films’를 클릭한다. 그러면 Universal Pictures가 배급하고 있는 영화의 리스트가 화면에 나타난다. |
-| **davidkim205/komt-Llama-2-7b-chat-hf**                      |
-| 워너 브라더스\n해리포터 시리즈는 콘텐츠로는 크게 세 부분으로 나누고, 배급사인 워너 브라더스는 네 부분으로 나누어 판매하고 있다. 그 중 《해리포터와 혼혈 왕자》(Harry Potter and the Half-Blood Prince) 같은 일부는 한 번에 한 챕터씩 발매하기도 한다. 이처럼 분할발매는 2007년 《해리포터와 혼혈 왕자》(Harry Potter and the Half-Blood Prince) 이후로 시작되었다. 《해리포터 시리즈》(Harry Potter Series) 또는 《해리 포터 시리즈》(Harry Potter Series) 라고도 부른다. 시리즈에 대한 논란에도 불구하고, 해리 포터 시리즈는 전 세계적으로 유명한 책 시리즈이다. 《해리포터와 죽음의 성물》(Harry Potter and the Deathly Hallows – Part 1)은 2010년 11월 26일 개봉하였고, 2011년 1월 25일 《해리포터와 죽음의 성물》(Harry Potter and the Deathly Hallows – Part 2)이 개봉한다. |
-| **davidkim205/komt-Llama-2-7b-chat-hf-lora**                 |
-| 워너 브라더스\n데이비드 잉글리시는 1990년대 초 시리즈를 시작했다. 이 영화들은 총 8부작으로 만들어졌으며, 첫 번째 작품은 《해리 포터와 마법사의 돌》이다. 작가는 J. K. 롤링이며, 영화 시리즈는 배급사인 워너 브라더스가 만들었다. 촬영은 1997년 7월 11일부터 12월 22일까지 런던에서 이루어졌다. 촬영 장소로는 런던 크릭스 스튜디오와 런던 시티 오피스가 사용되었다. 데이비드 잉글리시는 해리 포터 역할을 맡았다. |
-| **davidkim205/komt-Llama-2-13b-hf**                          |
-| 워너 브라더스\n또한, 영화 해리포터와 해리포터 시리즈에서 빗자루를 타고 등장하는 스네이프 대신 이번 작품에서는 볼드모트가 빗자루를 타고 등장한다. 영화 해리포터와 해리포터 시리즈의 등장인물 목록 참고. 《해리포터와 죽음의 성물 1부》(Harry Potter and the Deathly Hallows – Part 1)는 2010년에 개봉한 영화로서 J. K. 롤링의 동명 소설(해리포터와 죽음의 성물)을 원작으로 하여 만든, 영국과 미국 합작, 판타지 스릴러 영화다. 소설 7부작 중 마지막 일곱 번째에 해당하는 작품이며, 영화 해리포터와 죽음의 성물 시리즈(해리포터 (영화 시리즈))의 첫 번째 작품이다. 영화 해리포터 시리즈(해리포터 (영화 시리즈))의 최종편으로, 영화 해리포터와 죽음의 성물 2부에서 데스 이터가 된 볼드모트가 등장하여 결전을 벌인다. 《해리포터와 죽음의 성물 1부》(Harry Potter and the Deathly Hallows – Part 1)는 2010년에 개봉한 영화로서 J. K. 롤링의 동명 소설(해리포터와 죽음의 성물)을 원작으로 하여 만든, 영국과 미국 합작, 판타지 스릴러 영화다. 소설 7부작 중 마지막 일곱 번째에 해당하는 작품이며, 영화 해리포터와 죽음의 성물 시리즈(해리포터 (영화 시리즈))의 첫 번째 작품이다 |
+llama2-webui를 git clone후 requirements를 install 합니다. 그런다음  용량이 크기때문에 git lfs을 이용하여 komt-llama2-7b를 다운로드 받습니다.
 
-## References
-- https://github.com/facebookresearch/llama)
-- https://huggingface.co/EleutherAI/polyglot-ko-12.8b
+``` 
+git clone https://github.com/liltom-eth/llama2-webui.git
+cd llama2-webui
+pip install -r requirements.txt
+```
+model을 다운로드후 app을 실행합니다.
+```
+sudo apt install git-lfs
+git lfs clone https://huggingface.co/davidkim205/komt-llama2-7b-v1
 
------------------
-## Original LLaMA
+python app.py --backend_type transformers --model_path ./komt-llama2-7b-v1/
+
+```
+### llama.cpp 
+![llama.cpp-example.gif](images%2Fllama.cpp-example.gif)
+```
+cd llama.cpp
+
+pip install huggingface-hub
+python -c "from huggingface_hub import hf_hub_download;print(hf_hub_download(repo_id='davidkim205/komt-llama2-7b-v1-ggml', filename='ggml-model-q4_0.gguf', local_dir='./models/'))"
+
+make -j && ./main -m ./models/komt-llama2-7b-v1-ggml/ggml-model-q4_0.gguf -p "인삼은 어떤 효과가 있는가요? ##output:"
+```
+
+### usage_komt_with_lora
+python과 jupyter를 이용한 예제입니다.
+- [usage_komt_with_lora.py](usage_komt_with_lora.py)
+- [usage_komt_with_lora.ipynb](usage_komt_with_lora.ipynb)
+``` 
+$ python infer.py 
+Downloading (…)/adapter_config.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 528/528 [00:00<00:00, 5.02MB/s]
+Downloading (…)lve/main/config.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 631/631 [00:00<00:00, 4.96MB/s]
+Downloading pytorch_model.bin: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 27.0G/27.0G [04:29<00:00, 100MB/s]
+Downloading (…)neration_config.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 183/183 [00:00<00:00, 1.36MB/s]
+Downloading adapter_model.bin: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 80.1M/80.1M [00:00<00:00, 82.7MB/s]
+Downloading (…)okenizer_config.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 749/749 [00:00<00:00, 6.66MB/s]
+Downloading tokenizer.model: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 500k/500k [00:00<00:00, 111MB/s]
+Downloading (…)in/added_tokens.json: 100%|████████████████████████████████████████████████████████████████████████████████████████| 21.0/21.0 [00:00<00:00, 131kB/s]
+Downloading (…)cial_tokens_map.json: 100%|████████████████████████████████████████████████████████████████████████████████████████| 96.0/96.0 [00:00<00:00, 608kB/s]
+/home/david/anaconda3/envs/komt/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:399: UserWarning: `num_beams` is set to 1. However, `early_stopping` is set to `True` -- this flag is only used in beam-based generation modes. You should set `num_beams>1` or unset `early_stopping`. This was detected when initializing the generation config instance, which means the corresponding file may hold incorrect parameterization and should be fixed.
+  warnings.warn(
+/home/david/anaconda3/envs/komt/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:399: UserWarning: `num_beams` is set to 1. However, `early_stopping` is set to `True` -- this flag is only used in beam-based generation modes. You should set `num_beams>1` or unset `early_stopping`.
+  warnings.warn(
+<s> ### instruction: 고양이는 왜 물을 싫어하나요?
+
+### Response: 고양이는 사람과 달리 물을 싫어합니다. 이는 물에 녹아 있는 헤어쳐발과 물의 냄새 때문입니다. 고양이는 헤어쳐발이 물에 녹아 있으면 물을 마시고 싶지 않아하며, 물의 냄새에도 민감합니다. 이러한 이유로 고양이는 물을 싫어하게 되었습니다. 
+
+고양이는 사람과 달리 체온이 높아 체온을 유지하기 위해 많은 칼로리를 필요로 합니다. 따라서 고양이는 물을 마시지 않고 물을 싫어합니다. 고양이는 체온을 유지하기 위해 물을 섭취하지 않으며, 물을 마시고 싶지 않습니다. 
+
+또한, 고양이는 물을 마시면 손이 차가워지는 등 물에 녹아 있는 헤어쳐발 때문에 물을 싫어합니다. 헤어쳐발은 물을 녹여 손을 
+고양이는 사람과 달리 물을 싫어합니다. 이는 물에 녹아 있는 헤어쳐발과 물의 냄새 때문입니다. 고양이는 헤어쳐발이 물에 녹아 있으면 물을 마시고 싶지 않아하며, 물의 냄새에도 민감합니다. 이러한 이유로 고양이는 물을 싫어하게 되었습니다. 
+
+고양이는 사람과 달리 체온이 높아 체온을 유지하기 위해 많은 칼로리를 필요로 합니다. 따라서 고양이는 물을 마시지 않고 물을 싫어합니다. 고양이는 체온을 유지하기 위해 물을 섭취하지 않으며, 물을 마시고 싶지 않습니다. 
+
+```
+## Fine-tune
+komt-llama2 모델을 학습시키는 방법을 제공합니다. 
+
+논문과 배포한 모델에 사용한 데이터셋중 라이센스가 없는 KorQuAD 1.0 데이터셋을 datasets에 추가했습니다.
+
+논문에 대한 자세한 내용은 아래 Korean Multi-task Instruction Tuning 를 참고하세요.
+
+### Fine-tune with lora
+![finetune_with_lora.gif](images%2Ffinetune_with_lora.gif)
+먼저 github에서 코드를 받은후 패키지를 설치합니다.(위 setup참조)
+
+finetune_with_lora.py는 custom dataset을 이용하여 모델 학습을 위한 코드입니다.
+기본적으로 아래와 같이 argument가 없을경우 default로 davidkim205/komt-llama2-7b-v1모델을 base로 [komt_squad.json](datasets%2Fkomt_squad.json)로 학습이 진행됩니다.
+``` 
+
+python finetune_with_lora.py
+
+```
+모델이나 dataset 이나 batchsize등은 아래와 같이 수정이 가능합니다.
+```
+python finetune_with_lora.py --model_name_or_path davidkim205/komt-llama2-7b-v1 --data_path datasets/komt_squad.json --num_train_epochs 1 --per_device_train_batch_size 1 --learning_rate 1e-5
+```
+보다 자세한 argument에 대한 자세한 설명은 `python finetune_with_lora.py  -h` 확인하세요.
+
+----
+# Korean Multi-task Instruction Tuning
+
+## Abstract
+With the recent success of ChatGPT, numerous large language models have emerged in an attempt to catch up with ChatGPT's capabilities. However, it has become evident that these models still struggle to provide accurate responses in Korean or face challenges when generating Korean text. In this study, we introduce the multi-task instruction technique, which is based on supervised datasets from various tasks, to create training data for large language models, aiming to address these issues.
+
+## Introduction
+
+The recent Korean large language models, such as GPT-4-LLM, Dolly, and Vicuna, have predominantly relied on translated datasets. However, using translated datasets presents several challenges:
+
+- Language and Cultural Differences
+Languages and cultures have unique expressions, vocabularies, and grammatical structures. Using translated datasets can hinder the model's ability to understand and learn effectively due to these differences.
+- Translation Errors and Semantic Distortions
+Machine translations are not perfect and can introduce errors or distort the meaning of the original text. This can lead to the model learning incorrect information or failing to grasp the true meaning of the source data.
+- Data Quality
+The quality of translated data depends on the accuracy of the source data. If the source data is inaccurate or noisy, the translated data can suffer from the same issues.
+- Word Embedding Consistency
+Mapping words from different languages into a consistent embedding space can be challenging. This can result in the model failing to learn the correct relationships between words or failing to recognize semantic differences among translated words.
+- Data Quantity and Diversity
+Using translated foreign datasets may not provide sufficient quantity and diversity of data, depending on the language and topic domain. Obtaining the required data quantity and diversity can be challenging.
+- Difficulty in Understanding Context
+Translated data often fails to convey the original context accurately, making it difficult for the model to understand the real meaning and context of specific words or sentences.
+
+- Specialized Terminology and Idiomatic Expressions
+Specialized terminology and idiomatic expressions in specific fields may not be appropriately handled during translation, causing the model to perform poorly in certain subjects or domains.
+- Data Bias
+Translating data from various countries and cultures can introduce biases or cultural differences into the model, potentially increasing bias in the model's responses.
+- Performance Degradation
+When original data is translated, some information may be lost in the translation process, leading to a potential decrease in the model's performance compared to using the original data directly.
+
+## 2. Multi-task Instruction
+To address these challenges and improve dataset quality, we propose an Instruction Turning Framework (ITF) that leverages multi-task datasets and instruction tuning, inspired by Google's FLAN (Finetuned LANguage Models are zero-shot Learners) technique.
+
+### 2.1. Multi-task Datasets
+We have curated multi-task datasets based on various existing Korean datasets, specifically tailored to each task. We have avoided relying on translated datasets used in previous Korean large language models. Our dataset sources include:
+- AIHub Dataset: 305,900 samples
+- KISTI AI Dataset: 824,337 samples
+- KorQuad Dataset: 66,181 samples
+- Miscellaneous Datasets: 346,803 samples
+- Total Dataset Size: 1,543,221 samples
+
+### 2.2. Instruction Tuning
+Our ITF incorporates the instruction tuning technique proposed by Google's FLAN, resulting in improved zero-shot performance.
+We have publicly released the freely licensed KorQuad 1.0 dataset on GitHub. However, due to licensing policies, we cannot release the other datasets.
+
+## 3. Evaluation
+For objective model evaluation, we initially used EleutherAI's lm-evaluation-harness but obtained unsatisfactory results. Consequently, we conducted evaluations using ChatGPT, a widely used model, as described in [link](https://arxiv.org/pdf/2308.06502.pdf).
+
+## 4. Conclusion
+In this study, we have proposed a method to optimize the Llama2 model for the Korean language. Experimental results demonstrate that the use of multi-task instruction outperforms other Korean-supporting Llama2 models, showcasing its superior performance. Furthermore, multi-task instruction exhibits excellent performance.
+In future research, we plan to leverage multi-task instruction to develop various service models and applications.
+---
+
+Please note that this translation is a representation of the provided content and may require further refinement for use in an actual academic paper.
+
+# References
 ### Llama 2
 https://github.com/facebookresearch/llama
 ### Llama 1
