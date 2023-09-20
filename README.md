@@ -6,6 +6,8 @@ However, when it comes to Korean language performance, it has been observed that
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
 
 ## News or Update
+### 2023.09.20
+- finetune_with_lora 학습시 4bit, 8bit 선택하여 학습할수 있도록 기능추가
 ### 2023.09.19
 - komt-llama2 모델을 쉽게 사용할수 있도록 예제와 학습 방법, 데이터셋을 추가합니다.
 ### 2023.09.17 
@@ -164,6 +166,13 @@ python finetune_with_lora.py --model_name_or_path davidkim205/komt-llama2-7b-v1 
 ```
 보다 자세한 argument에 대한 자세한 설명은 `python finetune_with_lora.py  -h` 확인하세요.
 
+#### finetune 8-bit models with Low Rank Adaption (LoRA)
+finetune_with_lora.py는  기본적으로 4-bit로 양자화하여 학습을 합니다. 
+8bit로 양자화할경우 아래와 같이 사용하면 됩니다.
+```
+python finetune_with_lora.py --bits 8
+```
+
 ----
 # Korean Multi-task Instruction Tuning
 
@@ -212,9 +221,11 @@ We have publicly released the freely licensed KorQuad 1.0 dataset on GitHub. How
 ## 3. Evaluation
 For objective model evaluation, we initially used EleutherAI's lm-evaluation-harness but obtained unsatisfactory results. Consequently, we conducted evaluations using ChatGPT, a widely used model, as described in [link](https://arxiv.org/pdf/2308.06502.pdf).
 
+
 ## 4. Conclusion
 In this study, we have proposed a method to optimize the Llama2 model for the Korean language. Experimental results demonstrate that the use of multi-task instruction outperforms other Korean-supporting Llama2 models, showcasing its superior performance. Furthermore, multi-task instruction exhibits excellent performance.
 In future research, we plan to leverage multi-task instruction to develop various service models and applications.
+
 ---
 
 Please note that this translation is a representation of the provided content and may require further refinement for use in an actual academic paper.

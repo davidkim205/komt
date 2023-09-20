@@ -70,7 +70,9 @@ class TrainingArguments(transformers.TrainingArguments):
             "help": "If True, use gradient checkpointing to save memory at the expense of slower backward pass."
         },
     )
-
+    bits: Optional[int] = field(
+        default=4, metadata={"help": "The number of bits to quantize to."}
+    )
 
 def _tokenize_fn(strings: Sequence[str], tokenizer: transformers.PreTrainedTokenizer) -> Dict:
     """Tokenize a list of strings."""
@@ -225,17 +227,29 @@ def train():
     parser = transformers.HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_use_double_quant=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16
-    )
-    model = transformers.AutoModelForCausalLM.from_pretrained(
-        model_args.model_name_or_path,
-        quantization_config=bnb_config,
-        device_map={"": 0}
-    )
+    if training_args.bits == 8:
+        bnb_config = BitsAndBytesConfig(
+            load_in_8bit=True,
+        )
+        model = transformers.AutoModelForCausalLM.from_pretrained(
+            model_args.model_name_or_path,
+            load_in_8bit=True,
+            quantization_config=bnb_config,
+            device_map={"": 0}
+        )
+    else:
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_use_double_quant=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.bfloat16
+        )
+        model = transformers.AutoModelForCausalLM.from_pretrained(
+            model_args.model_name_or_path,
+            load_in_4bit=True,
+            quantization_config=bnb_config,
+            device_map={"": 0}
+        )
     model.gradient_checkpointing_enable()
     model = prepare_model_for_kbit_training(model)
 
