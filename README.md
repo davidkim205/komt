@@ -24,14 +24,14 @@ This study addresses these challenges by introducing a multi-task instruction te
 - [davidkim205/komt-llama2-7b-v1](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf)
 - [davidkim205/komt-llama2-7b-v1-lora](https://huggingface.co/davidkim205/komt-llama2-7b-v1-lora)
 - [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
--  
+
 ### old version
 - komt-Llama-2-7b-chat-hf : [davidkim205/komt-Llama-2-7b-chat-hf](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf)
 - komt-Llama-2-7b-chat-hf-lora : [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
 - komt-Llama-2-7b-chat-hf-ggml : [davidkim205/komt-Llama-2-7b-chat-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-ggml)
 - komt-Llama-2-13b-chat-hf : [davidkim205/komt-Llama-2-13b-hf](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf)
 - komt-Llama-2-13b-chat-hf-lora : [davidkim205/komt-Llama-2-13b-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-lora)
-- komt-Llama-2-13b-chat-hf-ggml : [davidkim205/komt-Llama-2-13b-hf-ggml]https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-ggml)
+- komt-Llama-2-13b-chat-hf-ggml : [davidkim205/komt-Llama-2-13b-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-ggml)
 
 ## Hardware and Software
 - nvidia driver : 535.54.03
@@ -108,6 +108,7 @@ make -j && ./main -m ./models/ggml-model-q4_0.gguf -p "인삼은 어떤 효과�
 ```
 ### llama.cpp with google colab
 google colab에서 llama.cpp를 사용하여 komt를 사용하는 방법 
+
 https://colab.research.google.com/drive/1uLHXv-6NT7yj4FHECrZezfo5pVL-ht63?usp=sharing
 
 
@@ -227,8 +228,6 @@ In this study, we have proposed a method to optimize the Llama2 model for the Ko
 In future research, we plan to leverage multi-task instruction to develop various service models and applications.
 
 ---
-
-Please note that this translation is a representation of the provided content and may require further refinement for use in an actual academic paper.
 
 # References
 ### Llama 2
