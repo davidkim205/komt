@@ -1,4 +1,4 @@
-# komt
+# komt : Korean Multi-task Instruction Tuning
 ![multi task instruction tuning.jpg](images%2Fmulti%20task%20instruction%20tuning.jpg)
 
 Recently, due to the success of ChatGPT, numerous large language models have emerged in an attempt to catch up with ChatGPT's capabilities. 
