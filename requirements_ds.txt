@@ -1,0 +1,16 @@
+uvicorn
+git+https://github.com/huggingface/accelerate.git
+git+https://github.com/huggingface/transformers.git
+datasets
+scipy
+numpy
+rouge_score
+fire
+openai
+sentencepiece
+wandb
+gradio==3.9
+deepspeed==0.9.3
+tensorboardX
+jupyter
+ipykernel

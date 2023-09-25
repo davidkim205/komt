@@ -6,6 +6,17 @@ However, when it comes to Korean language performance, it has been observed that
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
 
 ## News or Update
+### 2023.09.25
+- komt-llama2-13b-v1 모델 추가
+> - [davidkim205/komt-llama2-13b-v1](https://huggingface.co/davidkim205/komt-llama2-13b-v1)
+> - [davidkim205/komt-llama2-13b-v1-lora](https://huggingface.co/davidkim205/komt-llama2-13b-v1-lora)
+> - [davidkim205/komt-llama2-13b-v1-ggml](https://huggingface.co/davidkim205/komt-llama2-13b-v1-ggml)
+### 2023.09.24
+- Fine-tune with deepspeed 학습 방법 추가
+### 2023.09.23
+- usage komt with vllm 코드와 설치 방법 추가
+### 2023.09.22
+- 모델 평가 결과표 추가
 ### 2023.09.20
 - finetune_with_lora 학습시 4bit, 8bit 선택하여 학습할수 있도록 기능추가
 ### 2023.09.19
@@ -143,6 +154,27 @@ Downloading (…)cial_tokens_map.json: 100%|████████████
 고양이는 사람과 달리 체온이 높아 체온을 유지하기 위해 많은 칼로리를 필요로 합니다. 따라서 고양이는 물을 마시지 않고 물을 싫어합니다. 고양이는 체온을 유지하기 위해 물을 섭취하지 않으며, 물을 마시고 싶지 않습니다. 
 
 ```
+### usage komt with vllm
+![vllm.gif](images%2Fvllm.gif)
+vllm 라이브러리를 사용하기 위해서는 아래와 같이 conda 환경을 생성한후에 requirements_vllm.txt으로 패키지들을 설치해야합니다.
+``` 
+conda create -n vllm python=3.10
+conda activate vllm
+pip install -r requirements_vllm.txt
+```
+예제 코드는 아래와 같이 실행한후에 질문을 입력하면 됩니다.
+``` 
+$ python usage_komt_with_vllm.py 
+INFO 09-25 18:48:20 llm_engine.py:72] Initializing an LLM engine with config: model='davidkim205/komt-llama2-7b-v1', tokenizer='davidkim205/komt-llama2-7b-v1', tokenizer_mode=auto, trust_remote_code=False, dtype=torch.float16, download_dir=None, load_format=auto, tensor_parallel_size=1, seed=0)
+INFO 09-25 18:48:20 tokenizer.py:30] For some LLaMA-based models, initializing the fast tokenizer may take a long time. To eliminate the initialization time, consider using 'hf-internal-testing/llama-tokenizer' instead of the original tokenizer.
+INFO 09-25 18:48:36 llm_engine.py:199] # GPU blocks: 1048, # CPU blocks: 512
+>제주도 데이트 코스 알려줘
+Processed prompts: 100%|██████████████████████████████████████████| 1/1 [00:15<00:00, 15.30s/it]
+Prompt: '### instruction: 제주도 데이트 코스 알려줘\n\n### Response: ', Generated text: '제주도 데이트 코스 알려드리겠습니다.\n1. 아침에 일찍 일어나서 제주상공원에서 아침 해돋이를 보쩰 인사를 드립니다.\n2. 상공원을 돌아다니며 자연의 아름다움을 만끽합니다. 특히, 용두보 폭포를 건너 다니며 멋진 경치를 감상합니다.\n3. 오후 1시쯤 제주시의 유명한 향기를 맡을 수 있는 성산일출봉 근처 퍼즐을 풀어보세요. 여기에서는 노래방, 샤프심 강연, 워커힐 컨서트, 한라산성 발견 여숙 등 흥미로운 체험을 할 수 있습니다.\n4. 제주특유의 다양한 해산물 (해초, 김치, 해석 등)을 구경하고 싶다면, 자주짓네미나 제주시의 전통시장을 방문해보세요. 해산물 사찰 근처에 위치한 특수시장에서는 제주감귤을 맛볼 수 있습니다.\n5. 마지막으로 저녁에는 성산일출봉에서 한라산의 일출을 볼 수 있습니다. 일출을 감상하며 그 아름다움에 대한 감사를 표현합니다.\n\n이제 제주특별의 매력을 즐기실 준비가 되셨나요? 헛된 일상에서 벗어나 여유로움을 느낄 수 있는 제주도 데이트 코스를 즐기보세요.'
+
+```
+
+
 ## Fine-tune
 komt-llama2 모델을 학습시키는 방법을 제공합니다. 
 
@@ -173,7 +205,26 @@ finetune_with_lora.py는  기본적으로 4-bit로 양자화하여 학습을 합
 ```
 python finetune_with_lora.py --bits 8
 ```
+### Fine-tune with deepspeed
+finetune_with_ds.py은 DeepSpeed기반으로 ZeRO-3 Offload을 사용하여 학습을 합니다. 
+CPU Offloading을 통하여 GPU 메모리 사용량을 줄지만 CPU 메모리를 사용하기때문에 hw 사양에 맞게 조정을 해야합니다.
+deepspeed 파일은 configs/deepseed_config.json에 추가하였습니다.
 
+deepspeed를 이용할경우 아래와 같이 conda 환경을 추가한다음 해당 패키지를 설치해야 합니다.
+``` 
+conda create -n ds python=3.10
+conda activate ds
+pip install -r requirements_ds.txt
+```
+
+finetune_with_deepspeed 사용방법은 아래와 같습니다.
+``` 
+deepspeed finetune_with_deepspeed.py
+```
+argument 수정시 아래를 참고하세요.
+``` 
+deepspeed finetune_with_deepspeed.py --model_name_or_path davidkim205/komt-llama2-7b-v1 --data_path datasets/komt_squad.json --num_train_epochs 1 --per_device_train_batch_size 1 --learning_rate 1e-5 --deepspeed configs/deepspeed_config.json
+```
 ----
 # Korean Multi-task Instruction Tuning
 
@@ -220,8 +271,16 @@ Our ITF incorporates the instruction tuning technique proposed by Google's FLAN,
 We have publicly released the freely licensed KorQuad 1.0 dataset on GitHub. However, due to licensing policies, we cannot release the other datasets.
 
 ## 3. Evaluation
-For objective model evaluation, we initially used EleutherAI's lm-evaluation-harness but obtained unsatisfactory results. Consequently, we conducted evaluations using ChatGPT, a widely used model, as described in [link](https://arxiv.org/pdf/2308.06502.pdf).
+For objective model evaluation, we initially used EleutherAI's lm-evaluation-harness but obtained unsatisfactory results. Consequently, we conducted evaluations using ChatGPT, a widely used model, as described in [Self-Alignment with Instruction Backtranslation](https://arxiv.org/pdf/2308.06502.pdf) and [Three Ways of Using Large Language Models to Evaluate Chat](https://arxiv.org/pdf/2308.06259.pdf) .
 
+| model                          | score   | average score | %          |
+| ------------------------------ | ------- |---------------|------------|
+| gpt-3.5-turbo                  | 147     | 3.97          | 79.45%     |
+| WizardLM-13B-V1.2              | 96      | 2.59          | 51.89%     |
+| Llama-2-7b-chat-hf             | 67      | 1.81          | 36.21%     |
+| Llama-2-13b-chat-hf            | 73      | 1.91          | 38.37%     |
+| **komt-llama2-7b-v1 (ours)**   | **117** | **3.16**      | **63.24%** |
+| **komt-llama2-13b-v1  (ours)** | **129** | **3.48**      | **69.72%** |
 
 ## 4. Conclusion
 In this study, we have proposed a method to optimize the Llama2 model for the Korean language. Experimental results demonstrate that the use of multi-task instruction outperforms other Korean-supporting Llama2 models, showcasing its superior performance. Furthermore, multi-task instruction exhibits excellent performance.
