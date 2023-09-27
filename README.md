@@ -6,6 +6,13 @@ However, when it comes to Korean language performance, it has been observed that
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
 
 ## News or Update
+### 2023.09.27
+- chatgpt 기반 평가 결과에 아래 모델 추가
+> - naver Cue
+> - clova X
+> - nlpai-lab/kullm-polyglot-12.8b-v2
+> - kfkas/Llama-2-ko-7b-Chat
+> - beomi/KoAlpaca-Polyglot-12.8B
 ### 2023.09.25
 - komt-llama2-13b-v1 모델 추가
 > - [davidkim205/komt-llama2-13b-v1](https://huggingface.co/davidkim205/komt-llama2-13b-v1)
@@ -63,6 +70,61 @@ pip install -r requirements.txt
 ## Usage
 우리는 komt-llama2 모델을 사용할수 있는 다양한 방법을 제공합니다.
 
+## transformers
+``` 
+from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import TextStreamer, GenerationConfig
+
+model_name='davidkim205/komt-llama2-7b-v1'
+model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+streamer = TextStreamer(tokenizer)
+
+def gen(x):
+    generation_config = GenerationConfig(
+        temperature=0.8,
+        top_p=0.8,
+        top_k=100,
+        max_new_tokens=512,
+        early_stopping=True,
+        do_sample=True,
+    )
+    q = f"### instruction: {x}\n\n### Response: "
+    gened = model.generate(
+        **tokenizer(
+            q,
+            return_tensors='pt',
+            return_token_type_ids=False
+        ).to('cuda'),
+        generation_config=generation_config,
+        pad_token_id=tokenizer.eos_token_id,
+        eos_token_id=tokenizer.eos_token_id,
+        streamer=streamer,
+    )
+    result_str = tokenizer.decode(gened[0])
+
+    start_tag = f"\n\n### Response: "
+    start_index = result_str.find(start_tag)
+
+    if start_index != -1:
+        result_str = result_str[start_index + len(start_tag):].strip()
+    return result_str
+
+print(gen('제주도를 1박2일로 혼자 여행하려고 하는데 여행 코스를 만들어줘'))
+```
+결과
+``` 
+### Response: 제주도를 1박2일로 혼자 여행하려면 다음과 같은 여행 코스를 만들어 계획할 수 있습니다:
+
+1일차:
+- 아침: 제주도의 아름다운 해변을 구경하기 위해 해변에 도착하세요. 일출을 감상하며 자연의 아름다움을 만끽하세요.
+- 오후: 제주도의 대표적인 관광지인 한라산을 탐험하세요. 등산로를 따라 올라가면서 경치를 즐기고 설명을 듣으며 쉬운 산책을 즐기세요.
+- 저녁: 제주도의 맛있는 음식점에서 저녁을 보내세요. 신선한 해산물과 향신료로 만든 음식을 맛보는 것은 제주도 여행의 완벽한 경험이 될 것입니다.
+
+2일차:
+- 아침: 한라산 일대를 탐험하기 위해 한라산 케이프로 이동하세요. 이 케이프는 등산을 즐기는 사람들에게 최적의 선택입니다. 
+
+```
 ### text-generation-webui
 ![text-generation-webui.gif](images%2Ftext-generation-webui.gif)
 
@@ -273,14 +335,20 @@ We have publicly released the freely licensed KorQuad 1.0 dataset on GitHub. How
 ## 3. Evaluation
 For objective model evaluation, we initially used EleutherAI's lm-evaluation-harness but obtained unsatisfactory results. Consequently, we conducted evaluations using ChatGPT, a widely used model, as described in [Self-Alignment with Instruction Backtranslation](https://arxiv.org/pdf/2308.06502.pdf) and [Three Ways of Using Large Language Models to Evaluate Chat](https://arxiv.org/pdf/2308.06259.pdf) .
 
-| model                          | score   | average score | %          |
-| ------------------------------ | ------- |---------------|------------|
-| gpt-3.5-turbo                  | 147     | 3.97          | 79.45%     |
-| WizardLM-13B-V1.2              | 96      | 2.59          | 51.89%     |
-| Llama-2-7b-chat-hf             | 67      | 1.81          | 36.21%     |
-| Llama-2-13b-chat-hf            | 73      | 1.91          | 38.37%     |
-| **komt-llama2-7b-v1 (ours)**   | **117** | **3.16**      | **63.24%** |
-| **komt-llama2-13b-v1  (ours)** | **129** | **3.48**      | **69.72%** |
+| model                                   | score   | average(0~5) | percentage |
+| --------------------------------------- | ------- | ------------ | ---------- |
+| gpt-3.5-turbo(close)                    | 147     | 3.97         | 79.45%     |
+| naver Cue(close)                        | 140     | 3.78         | 75.67%     |
+| clova X(close)                          | 136     | 3.67         | 73.51%     |
+| WizardLM-13B-V1.2(open)                 | 96      | 2.59         | 51.89%     |
+| Llama-2-7b-chat-hf(open)                | 67      | 1.81         | 36.21%     |
+| Llama-2-13b-chat-hf(open)               | 73      | 1.91         | 38.37%     |
+| nlpai-lab/kullm-polyglot-12.8b-v2(open) | 70      | 1.89         | 37.83%     |
+| kfkas/Llama-2-ko-7b-Chat(open)          | 96      | 2.59         | 51.89%     |
+| beomi/KoAlpaca-Polyglot-12.8B(open)     | 100     | 2.70         | 54.05%     |
+| **komt-llama2-7b-v1 (open)(ours)**      | **117** | **3.16**     | **63.24%** |
+| **komt-llama2-13b-v1  (open)(ours)**    | **129** | **3.48**     | **69.72%** |
+
 
 ## 4. Conclusion
 In this study, we have proposed a method to optimize the Llama2 model for the Korean language. Experimental results demonstrate that the use of multi-task instruction outperforms other Korean-supporting Llama2 models, showcasing its superior performance. Furthermore, multi-task instruction exhibits excellent performance.
