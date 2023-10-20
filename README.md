@@ -6,6 +6,12 @@ However, when it comes to Korean language performance, it has been observed that
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
 
 ## News or Update
+### 2023.10.20
+- komt-llama-30b-v1 모델 추가
+> - [davidkim205/komt-llama-30b-v1](https://huggingface.co/davidkim205/komt-llama-30b-v1)
+> - [davidkim205/komt-llama-30b-v1-lora](https://huggingface.co/davidkim205/komt-llama-30b-v1-lora)
+
+
 ### 2023.09.27
 - chatgpt 기반 평가 결과에 아래 모델 추가
 > - naver Cue
@@ -13,12 +19,6 @@ This study addresses these challenges by introducing a multi-task instruction te
 > - nlpai-lab/kullm-polyglot-12.8b-v2
 > - kfkas/Llama-2-ko-7b-Chat
 > - beomi/KoAlpaca-Polyglot-12.8B
-### 2023.10.20
-- komt-llama-30b-v1 모델 추가
-> - [davidkim205/komt-llama-30b-v1](https://huggingface.co/davidkim205/komt-llama-30b-v1)
-> - [davidkim205/komt-llama-30b-v1-lora](https://huggingface.co/davidkim205/komt-llama-30b-v1-lora)
-- komt-mistral-7b-v1 모델 추가
-
 
 ### 2023.09.25
 - komt-llama2-13b-v1 모델 추가
@@ -312,7 +312,6 @@ chatgpt를 이용하여 질문과 대답에대한 평가를 아래와 같이 진
 | beomi/KoAlpaca-Polyglot-12.8B(open)     | 100     | 2.70         | 54.05%     |
 | **komt-llama2-7b-v1 (open)(ours)**      | **117** | **3.16**     | **63.24%** |
 | **komt-llama2-13b-v1  (open)(ours)**    | **129** | **3.48**     | **69.72%** |
-| **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
 | **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
 | **komt-mistral-7b-v1  (open)(ours)**    | **123** | **3.32**     | **66.48%** |
 
