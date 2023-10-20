@@ -13,6 +13,13 @@ This study addresses these challenges by introducing a multi-task instruction te
 > - nlpai-lab/kullm-polyglot-12.8b-v2
 > - kfkas/Llama-2-ko-7b-Chat
 > - beomi/KoAlpaca-Polyglot-12.8B
+### 2023.10.20
+- komt-llama-30b-v1 모델 추가
+> - [davidkim205/komt-llama-30b-v1](https://huggingface.co/davidkim205/komt-llama-30b-v1)
+> - [davidkim205/komt-llama-30b-v1-lora](https://huggingface.co/davidkim205/komt-llama-30b-v1-lora)
+- komt-mistral-7b-v1 모델 추가
+
+
 ### 2023.09.25
 - komt-llama2-13b-v1 모델 추가
 > - [davidkim205/komt-llama2-13b-v1](https://huggingface.co/davidkim205/komt-llama2-13b-v1)
@@ -281,12 +288,34 @@ pip install -r requirements_ds.txt
 
 finetune_with_deepspeed 사용방법은 아래와 같습니다.
 ``` 
-deepspeed finetune_with_deepspeed.py
+deepspeed finetune_with_ds.py
 ```
 argument 수정시 아래를 참고하세요.
 ``` 
-deepspeed finetune_with_deepspeed.py --model_name_or_path davidkim205/komt-llama2-7b-v1 --data_path datasets/komt_squad.json --num_train_epochs 1 --per_device_train_batch_size 1 --learning_rate 1e-5 --deepspeed configs/deepspeed_config.json
+deepspeed finetune_with_ds.py --model_name_or_path davidkim205/komt-llama2-7b-v1 --data_path datasets/komt_squad.json --num_train_epochs 1 --per_device_train_batch_size 1 --learning_rate 1e-5 --deepspeed configs/deepspeed_config.json
 ```
+
+## 평가결과
+chatgpt를 이용하여 질문과 대답에대한 평가를 아래와 같이 진행하였습니다. 모델 평가를 위한 질문과 답변 chatgpt의 평가 결과는 eval_results를 참고하세요.
+
+
+| model                                   | score   | average(0~5) | percentage |
+| --------------------------------------- | ------- | ------------ | ---------- |
+| gpt-3.5-turbo(close)                    | 147     | 3.97         | 79.45%     |
+| naver Cue(close)                        | 140     | 3.78         | 75.67%     |
+| clova X(close)                          | 136     | 3.67         | 73.51%     |
+| WizardLM-13B-V1.2(open)                 | 96      | 2.59         | 51.89%     |
+| Llama-2-7b-chat-hf(open)                | 67      | 1.81         | 36.21%     |
+| Llama-2-13b-chat-hf(open)               | 73      | 1.91         | 38.37%     |
+| nlpai-lab/kullm-polyglot-12.8b-v2(open) | 70      | 1.89         | 37.83%     |
+| kfkas/Llama-2-ko-7b-Chat(open)          | 96      | 2.59         | 51.89%     |
+| beomi/KoAlpaca-Polyglot-12.8B(open)     | 100     | 2.70         | 54.05%     |
+| **komt-llama2-7b-v1 (open)(ours)**      | **117** | **3.16**     | **63.24%** |
+| **komt-llama2-13b-v1  (open)(ours)**    | **129** | **3.48**     | **69.72%** |
+| **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
+| **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
+| **komt-mistral-7b-v1  (open)(ours)**    | **123** | **3.32**     | **66.48%** |
+
 ----
 # Korean Multi-task Instruction Tuning
 
@@ -348,7 +377,9 @@ For objective model evaluation, we initially used EleutherAI's lm-evaluation-har
 | beomi/KoAlpaca-Polyglot-12.8B(open)     | 100     | 2.70         | 54.05%     |
 | **komt-llama2-7b-v1 (open)(ours)**      | **117** | **3.16**     | **63.24%** |
 | **komt-llama2-13b-v1  (open)(ours)**    | **129** | **3.48**     | **69.72%** |
-
+| **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
+| **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
+| **komt-mistral-7b-v1  (open)(ours)**    | **123** | **3.32**     | **66.48%** |
 
 ## 4. Conclusion
 In this study, we have proposed a method to optimize the Llama2 model for the Korean language. Experimental results demonstrate that the use of multi-task instruction outperforms other Korean-supporting Llama2 models, showcasing its superior performance. Furthermore, multi-task instruction exhibits excellent performance.
