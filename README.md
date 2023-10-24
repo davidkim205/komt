@@ -10,7 +10,7 @@ This study addresses these challenges by introducing a multi-task instruction te
 - komt-mistral-7b-v1 모델 추가
 > - [davidkim205/komt-mistral-7b-v1](https://huggingface.co/davidkim205/komt-mistral-7b-v1)
 > - [davidkim205/komt-mistral-7b-v1-lora](https://huggingface.co/davidkim205/komt-mistral-7b-v1-lora)
-> - [davidkim205/komt-mistral-7b-v1-gguf] (https://huggingface.co/davidkim205/komt-mistral-7b-v1-gguf)
+> - [davidkim205/komt-mistral-7b-v1-gguf](https://huggingface.co/davidkim205/komt-mistral-7b-v1-gguf)
 
 ### 2023.10.20
 - komt-llama-30b-v1 모델 추가
