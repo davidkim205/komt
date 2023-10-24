@@ -6,6 +6,12 @@ However, when it comes to Korean language performance, it has been observed that
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
 
 ## News or Update
+### 2023.10.24
+- komt-mistral-7b-v1 모델 추가
+> - [davidkim205/komt-mistral-7b-v1](https://huggingface.co/davidkim205/komt-mistral-7b-v1)
+> - [davidkim205/komt-mistral-7b-v1-lora](https://huggingface.co/davidkim205/komt-mistral-7b-v1-lora)
+> - [davidkim205/komt-mistral-7b-v1-gguf] (https://huggingface.co/davidkim205/komt-mistral-7b-v1-gguf)
+
 ### 2023.10.20
 - komt-llama-30b-v1 모델 추가
 > - [davidkim205/komt-llama-30b-v1](https://huggingface.co/davidkim205/komt-llama-30b-v1)
@@ -300,7 +306,7 @@ chatgpt를 이용하여 질문과 대답에대한 평가를 아래와 같이 진
 
 
 | model                                   | score   | average(0~5) | percentage |
-| --------------------------------------- | ------- | ------------ | ---------- |
+| --------------------------------------- |---------| ------------ | ---------- |
 | gpt-3.5-turbo(close)                    | 147     | 3.97         | 79.45%     |
 | naver Cue(close)                        | 140     | 3.78         | 75.67%     |
 | clova X(close)                          | 136     | 3.67         | 73.51%     |
@@ -313,7 +319,7 @@ chatgpt를 이용하여 질문과 대답에대한 평가를 아래와 같이 진
 | **komt-llama2-7b-v1 (open)(ours)**      | **117** | **3.16**     | **63.24%** |
 | **komt-llama2-13b-v1  (open)(ours)**    | **129** | **3.48**     | **69.72%** |
 | **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
-| **komt-mistral-7b-v1  (open)(ours)**    | **123** | **3.32**     | **66.48%** |
+| **komt-mistral-7b-v1  (open)(ours)**    | **131** | **3.54**     | **70.81%** |
 
 ----
 # Korean Multi-task Instruction Tuning
@@ -363,8 +369,9 @@ We have publicly released the freely licensed KorQuad 1.0 dataset on GitHub. How
 ## 3. Evaluation
 For objective model evaluation, we initially used EleutherAI's lm-evaluation-harness but obtained unsatisfactory results. Consequently, we conducted evaluations using ChatGPT, a widely used model, as described in [Self-Alignment with Instruction Backtranslation](https://arxiv.org/pdf/2308.06502.pdf) and [Three Ways of Using Large Language Models to Evaluate Chat](https://arxiv.org/pdf/2308.06259.pdf) .
 
+
 | model                                   | score   | average(0~5) | percentage |
-| --------------------------------------- | ------- | ------------ | ---------- |
+| --------------------------------------- |---------| ------------ | ---------- |
 | gpt-3.5-turbo(close)                    | 147     | 3.97         | 79.45%     |
 | naver Cue(close)                        | 140     | 3.78         | 75.67%     |
 | clova X(close)                          | 136     | 3.67         | 73.51%     |
@@ -377,8 +384,8 @@ For objective model evaluation, we initially used EleutherAI's lm-evaluation-har
 | **komt-llama2-7b-v1 (open)(ours)**      | **117** | **3.16**     | **63.24%** |
 | **komt-llama2-13b-v1  (open)(ours)**    | **129** | **3.48**     | **69.72%** |
 | **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
-| **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
-| **komt-mistral-7b-v1  (open)(ours)**    | **123** | **3.32**     | **66.48%** |
+| **komt-mistral-7b-v1  (open)(ours)**    | **131** | **3.54**     | **70.81%** |
+
 
 ## 4. Conclusion
 In this study, we have proposed a method to optimize the Llama2 model for the Korean language. Experimental results demonstrate that the use of multi-task instruction outperforms other Korean-supporting Llama2 models, showcasing its superior performance. Furthermore, multi-task instruction exhibits excellent performance.
