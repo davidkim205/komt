@@ -52,18 +52,21 @@ This study addresses these challenges by introducing a multi-task instruction te
 - We are releasing the [davidkim205/komt-Llama-2-13b-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-lora) and [davidkim205/komt-Llama-2-13b-hf-ggml]https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-ggml) models
 
 ## Released Model Checkpoints
-- [davidkim205/komt-llama2-7b-v1](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf)
+### komt-llama2-7b
+- [davidkim205/komt-llama2-7b-v1](https://huggingface.co/davidkim205/komt-llama2-7b-v1)
 - [davidkim205/komt-llama2-7b-v1-lora](https://huggingface.co/davidkim205/komt-llama2-7b-v1-lora)
-- [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
-
-### old version
-- komt-Llama-2-7b-chat-hf : [davidkim205/komt-Llama-2-7b-chat-hf](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf)
-- komt-Llama-2-7b-chat-hf-lora : [davidkim205/komt-Llama-2-7b-chat-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-lora)
-- komt-Llama-2-7b-chat-hf-ggml : [davidkim205/komt-Llama-2-7b-chat-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-7b-chat-hf-ggml)
-- komt-Llama-2-13b-chat-hf : [davidkim205/komt-Llama-2-13b-hf](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf)
-- komt-Llama-2-13b-chat-hf-lora : [davidkim205/komt-Llama-2-13b-hf-lora](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-lora)
-- komt-Llama-2-13b-chat-hf-ggml : [davidkim205/komt-Llama-2-13b-hf-ggml](https://huggingface.co/davidkim205/komt-Llama-2-13b-hf-ggml)
-
+- [davidkim205/komt-llama2-7b-v1-ggml](https://huggingface.co/davidkim205/komt-llama2-7b-v1-ggml)
+### komt-llama2-13b
+- [davidkim205/komt-llama2-13b-v1](https://huggingface.co/davidkim205/komt-llama2-13b-v1)
+- [davidkim205/komt-llama2-13b-v1-lora](https://huggingface.co/davidkim205/komt-llama2-13b-v1-lora)
+- [davidkim205/komt-llama2-13b-v1-ggml](https://huggingface.co/davidkim205/komt-llama2-13b-v1-ggml)
+### komt-llama-30b
+- [davidkim205/komt-llama-30b-v1](https://huggingface.co/davidkim205/komt-llama-30b-v1)
+- [davidkim205/komt-llama-30b-v1-lora](https://huggingface.co/davidkim205/komt-llama-30b-v1-lora)
+### komt-mistral-7b
+- [davidkim205/komt-mistral-7b-v1](https://huggingface.co/davidkim205/komt-mistral-7b-v1)
+- [davidkim205/komt-mistral-7b-v1-lora](https://huggingface.co/davidkim205/komt-mistral-7b-v1-lora)
+- [davidkim205/komt-mistral-7b-v1-gguf](https://huggingface.co/davidkim205/komt-mistral-7b-v1-gguf)
 ## Hardware and Software
 - nvidia driver : 535.54.03
 - CUDA Version: 12.2

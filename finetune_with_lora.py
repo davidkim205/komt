@@ -40,12 +40,12 @@ class TrainingArguments(transformers.TrainingArguments):
         metadata={"help": "Maximum sequence length. Sequences will be right padded (and possibly truncated)."},
     )
     per_device_train_batch_size: int = field(
-        default=1, metadata={"help": "Batch size per GPU/TPU/MPS/NPU core/CPU for training."}
+        default=16, metadata={"help": "Batch size per GPU/TPU/MPS/NPU core/CPU for training."}
     )
     per_device_eval_batch_size: int = field(
-        default=1, metadata={"help": "Batch size per GPU/TPU/MPS/NPU core/CPU for evaluation."}
+        default=16, metadata={"help": "Batch size per GPU/TPU/MPS/NPU core/CPU for evaluation."}
     )
-    num_train_epochs: float = field(default=3.0, metadata={"help": "Total number of training epochs to perform."})
+    num_train_epochs: float = field(default=1.0, metadata={"help": "Total number of training epochs to perform."})
     warmup_steps: int = field(default=2, metadata={"help": "Linear warmup over warmup_steps."})
     logging_steps: float = field(
         default=1,
@@ -57,11 +57,8 @@ class TrainingArguments(transformers.TrainingArguments):
         },
     )
     lr_scheduler_type: Optional[str] = field(default='cosine')
-    fp16: bool = field(
-        default=True,
-        metadata={"help": "Whether to use fp16 (mixed) precision instead of 32-bit"},
-    )
-    learning_rate: float = field(default=1e-5, metadata={"help": "The initial learning rate for AdamW."})
+
+    learning_rate: float = field(default=1e-6, metadata={"help": "The initial learning rate for AdamW."})
 
     report_to: Optional[str] = field(default='tensorboard')
     gradient_checkpointing: bool = field(
@@ -71,7 +68,10 @@ class TrainingArguments(transformers.TrainingArguments):
         },
     )
     bits: Optional[int] = field(
-        default=4, metadata={"help": "The number of bits to quantize to."}
+        default=8, metadata={"help": "The number of bits to quantize to."}
+    )
+    max_steps: Optional[int] = field(
+        default=1000, metadata={"help": "the total number of training steps to perform."}
     )
 
 def _tokenize_fn(strings: Sequence[str], tokenizer: transformers.PreTrainedTokenizer) -> Dict:

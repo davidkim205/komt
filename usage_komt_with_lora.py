@@ -5,8 +5,8 @@ from peft import PeftModel, PeftConfig
 from transformers import TextStreamer, GenerationConfig
 
 
-model='davidkim205/komt-llama2-7b-v1'
-peft_model_name = 'davidkim205/komt-llama2-7b-v1-lora'
+model='davidkim205/komt-llama2-13b-v1'
+peft_model_name = 'davidkim205/komt-llama2-13b-v1-lora'
 config = PeftConfig.from_pretrained(peft_model_name)
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
