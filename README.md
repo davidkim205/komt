@@ -6,6 +6,11 @@ However, when it comes to Korean language performance, it has been observed that
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
 
 ## News or Update
+### 2023.11.29
+- komt-mistral-7b-v1-dpo : dpo(Direct Preference Optimization) 학습 모델 추가
+> - [davidkim205/komt-mistral-7b-v1-dpo](https://huggingface.co/davidkim205/komt-mistral-7b-v1-dpo/blob/main/README.md)
+- komt-mistral-7b-v1-dpo 평가결과 현재 komt모델 중에서 가장높은 성능인 76.75%기록.. (gpt-3.5-turbo 79.45%)
+ 
 ### 2023.10.24
 - komt-mistral-7b-v1 모델 추가
 > - [davidkim205/komt-mistral-7b-v1](https://huggingface.co/davidkim205/komt-mistral-7b-v1)
@@ -303,26 +308,39 @@ argument 수정시 아래를 참고하세요.
 ``` 
 deepspeed finetune_with_ds.py --model_name_or_path davidkim205/komt-llama2-7b-v1 --data_path datasets/komt_squad.json --num_train_epochs 1 --per_device_train_batch_size 1 --learning_rate 1e-5 --deepspeed configs/deepspeed_config.json
 ```
+### Fine-tune with Direct Preference Optimization (DPO) 
+상용서비스를 위한 Direct Preference Optimization를 이용하여 모델 학습을 하였습니다.
+
+DPO 학습이 잘되려면 SFT를 잘해야 하는데 이미 학습된 komt를 이용하여 모델을 학습하였습니다. 기존 모델대비 5% 성능향상이 있었으며 동일한 질문에 동일한 답변을 할수 있는 모델을 개발하였습니다.
+
+한글 데이터셋은 maywell/ko_Ultrafeedback_binarized 을 사용하였습니다.
+
+komt용 Ultrafeedback_binarized을 현재 만들고 있고 train 코드도 현재 작성중에 있습니다.
+
+dpo에 대한 자세한 내용은 다음 문서를 참고하세요. https://arxiv.org/abs/2305.18290
+
+
 
 ## 평가결과
 chatgpt를 이용하여 질문과 대답에대한 평가를 아래와 같이 진행하였습니다. 모델 평가를 위한 질문과 답변 chatgpt의 평가 결과는 eval_results를 참고하세요.
 
 
-| model                                   | score   | average(0~5) | percentage |
-| --------------------------------------- |---------| ------------ | ---------- |
-| gpt-3.5-turbo(close)                    | 147     | 3.97         | 79.45%     |
-| naver Cue(close)                        | 140     | 3.78         | 75.67%     |
-| clova X(close)                          | 136     | 3.67         | 73.51%     |
-| WizardLM-13B-V1.2(open)                 | 96      | 2.59         | 51.89%     |
-| Llama-2-7b-chat-hf(open)                | 67      | 1.81         | 36.21%     |
-| Llama-2-13b-chat-hf(open)               | 73      | 1.91         | 38.37%     |
-| nlpai-lab/kullm-polyglot-12.8b-v2(open) | 70      | 1.89         | 37.83%     |
-| kfkas/Llama-2-ko-7b-Chat(open)          | 96      | 2.59         | 51.89%     |
-| beomi/KoAlpaca-Polyglot-12.8B(open)     | 100     | 2.70         | 54.05%     |
-| **komt-llama2-7b-v1 (open)(ours)**      | **117** | **3.16**     | **63.24%** |
-| **komt-llama2-13b-v1  (open)(ours)**    | **129** | **3.48**     | **69.72%** |
-| **komt-llama-30b-v1  (open)(ours)**    | **129** | **3.16**     | **63.24%** |
-| **komt-mistral-7b-v1  (open)(ours)**    | **131** | **3.54**     | **70.81%** |
+| model                                    | score   | average(0~5) | percentage |
+|------------------------------------------|---------| ------------ |------------|
+| gpt-3.5-turbo(close)                     | 147     | 3.97         | 79.45%     |
+| naver Cue(close)                         | 140     | 3.78         | 75.67%     |
+| clova X(close)                           | 136     | 3.67         | 73.51%     |
+| WizardLM-13B-V1.2(open)                  | 96      | 2.59         | 51.89%     |
+| Llama-2-7b-chat-hf(open)                 | 67      | 1.81         | 36.21%     |
+| Llama-2-13b-chat-hf(open)                | 73      | 1.91         | 38.37%     |
+| nlpai-lab/kullm-polyglot-12.8b-v2(open)  | 70      | 1.89         | 37.83%     |
+| kfkas/Llama-2-ko-7b-Chat(open)           | 96      | 2.59         | 51.89%     |
+| beomi/KoAlpaca-Polyglot-12.8B(open)      | 100     | 2.70         | 54.05%     |
+| **komt-llama2-7b-v1 (open)(ours)**       | **117** | **3.16**     | **63.24%** |
+| **komt-llama2-13b-v1  (open)(ours)**     | **129** | **3.48**     | **69.72%** |
+| **komt-llama-30b-v1  (open)(ours)**      | **129** | **3.16**     | **63.24%** |
+| **komt-mistral-7b-v1  (open)(ours)**     | **131** | **3.54**     | **70.81%** |
+| **komt-mistral-7b-v1-dpo  (open)(ours)** | **142** | **3.83**     | **76.75%** |
 
 ----
 # Korean Multi-task Instruction Tuning
