@@ -6,6 +6,9 @@ However, when it comes to Korean language performance, it has been observed that
 This study addresses these challenges by introducing a multi-task instruction technique that leverages supervised datasets from various tasks to create training data for Large Language Models (LLMs).
 
 ## News or Update
+### 2023.12.05
+- dpo train 코드 공개 [dpo_train.py](dpo_train.py)
+
 ### 2023.11.29
 - komt-mistral-7b-v1-dpo : dpo(Direct Preference Optimization) 학습 모델 추가
 > - [davidkim205/komt-mistral-7b-v1-dpo](https://huggingface.co/davidkim205/komt-mistral-7b-v1-dpo/blob/main/README.md)
@@ -72,6 +75,7 @@ This study addresses these challenges by introducing a multi-task instruction te
 - [davidkim205/komt-mistral-7b-v1](https://huggingface.co/davidkim205/komt-mistral-7b-v1)
 - [davidkim205/komt-mistral-7b-v1-lora](https://huggingface.co/davidkim205/komt-mistral-7b-v1-lora)
 - [davidkim205/komt-mistral-7b-v1-gguf](https://huggingface.co/davidkim205/komt-mistral-7b-v1-gguf)
+- [davidkim205/komt-mistral-7b-v1-dpo](https://huggingface.co/davidkim205/komt-mistral-7b-v1-dpo)
 ## Hardware and Software
 - nvidia driver : 535.54.03
 - CUDA Version: 12.2
@@ -309,17 +313,36 @@ argument 수정시 아래를 참고하세요.
 deepspeed finetune_with_ds.py --model_name_or_path davidkim205/komt-llama2-7b-v1 --data_path datasets/komt_squad.json --num_train_epochs 1 --per_device_train_batch_size 1 --learning_rate 1e-5 --deepspeed configs/deepspeed_config.json
 ```
 ### Fine-tune with Direct Preference Optimization (DPO) 
-상용서비스를 위한 Direct Preference Optimization를 이용하여 모델 학습을 하였습니다.
+상용서비스를 위한 Direct Preference Optimization를 이용하여 모델 학습할수 있도록 train 코드와 모델을 공개합니다. 
 
-DPO 학습이 잘되려면 SFT를 잘해야 하는데 이미 학습된 komt를 이용하여 모델을 학습하였습니다. 기존 모델대비 5% 성능향상이 있었으며 동일한 질문에 동일한 답변을 할수 있는 모델을 개발하였습니다.
+DPO 학습이 잘되려면 SFT를 잘해야 하는데 이미 학습된 komt를 이용하여 모델을 학습하였고, 기존 모델대비 5% 성능향상이 있었으며 동일한 질문에 동일한 답변을 할수 있는 모델을 개발하였습니다.
 
 한글 데이터셋은 maywell/ko_Ultrafeedback_binarized 을 사용하였습니다.
 
-komt용 Ultrafeedback_binarized을 현재 만들고 있고 train 코드도 현재 작성중에 있습니다.
+dpo_train.py 를 실행하기 위하여 requirements_dpo.txt를 설치하여야 합니다.
+설치예입니다.
+```
+conda create -n dpo_train python=3.10
+conda activate dpo_train
+pip install -r requirements_dpo.txt
+```
+설치후 `accelerate config`를 이용하여 accelerate config 설정합니다.
+``` 
+accelerate config
+```
+그 후에 accelerate launch를 통하여 dpo_train을 합니다.
+```
+accelerate launch dpo_train.py
+```
+A100 1대기준으로 9시간 정도 걸립니다.
+```  
+ warnings.warn(
+  0%|                                             | 1/1000 [00:36<10:13:09, 36.83s/it]Token indices sequence length is longer than the specified maximum sequence length for this model (1069 > 1024). Running this sequence through the model will result in indexing errors
+{'loss': 0.6961, 'learning_rate': 5e-05, 'rewards/chosen': 0.004012207966297865, 'rewards/rejected': 0.007965649478137493, 'rewards/accuracies': 0.515625, 'rewards/margins': -0.003953440580517054, 'logps/rejected': -222.7124481201172, 'logps/chosen': -259.6094665527344, 'logits/rejected': -2.6427276134490967, 'logits/chosen': -2.6100172996520996, 'epoch': 0.01}
+  2%|▊                                            | 17/1000 [09:31<8:50:11, 32.36s/it]
+```
 
 dpo에 대한 자세한 내용은 다음 문서를 참고하세요. https://arxiv.org/abs/2305.18290
-
-
 
 ## 평가결과
 chatgpt를 이용하여 질문과 대답에대한 평가를 아래와 같이 진행하였습니다. 모델 평가를 위한 질문과 답변 chatgpt의 평가 결과는 eval_results를 참고하세요.

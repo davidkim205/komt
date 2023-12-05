@@ -1,0 +1,10 @@
+#git+https://github.com/huggingface/transformers@v4.33.3
+trl
+peft
+accelerate
+datasets
+bitsandbytes
+wandb
+scipy
+sentencepiece
+gradio
